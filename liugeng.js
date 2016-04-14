@@ -2,7 +2,7 @@
  * @Author: liugengpc
  * @Date:   2015-02-16 14:48:55
  * @Last Modified by:   liugengpc
- * @Last Modified time: 2016-04-13 22:32:30
+ * @Last Modified time: 2016-04-14 21:43:40
  */
 
 /*核心框架*/
@@ -27,7 +27,7 @@
       for (var i = 0; i < this.length; i += 1) {
         that[i] = nodeList[i];
       }
-    } else if(selector.nodeType) {
+    } else if (selector.nodeType) {
       that[0] = selector;
       that.length++;
     }
@@ -109,7 +109,19 @@
     rtrim: function(str) {
       return str.replace(/(\s*$)/g, '');
     },
-
+    // 获取函数形参列表
+    getFnParams: function(fn) {
+      if (typeof fn !== 'function') {
+        return false;
+      }
+      var matches = /.+\((.+)\)/.exec(fn.toString());
+      var ps = matches[1].split(',');
+      var res = [];
+      ps.forEach(p => {
+        res.push(p.trim());
+      });
+      return res;
+    }
     //简单的数据绑定formateString
     formateString: function(str, data) {
       return str.replace(/@\((\w+)\)/g, function(match, key) {
@@ -744,8 +756,8 @@
         }
       }
     },
-    });
-    /*参与链式访问*/
+  });
+  /*参与链式访问*/
   /*参与链式访问*/
   $$.extend({
     add: function(dom) {
